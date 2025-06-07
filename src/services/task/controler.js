@@ -14,16 +14,15 @@ const getAllTasks = async (req, res) => {
 
 const createTask = async (req, res) => {
     try {
-        const { title, description, status } = req.body;
-
-        if (!title || !description || !status) {
-            return res.status(400).json({ message: 'All fields are required' });
+        const {error, value} = validationNewTask.validate(req.body);
+        if (error) {
+            return res.status(400).json({message: error.details[0].message});
         }
 
-        const newTask = new TasksModel({ title, description, status });
-        const savedTask = await newTask.save();
+        const {title, description, status} = value;
 
-        res.status(201).json(savedTask);
+        const task = await TasksModel.create({title, description, status});
+        res.json(task);
 
     } catch (error) {
         console.error('Error fetching taks:', error);
