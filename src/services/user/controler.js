@@ -7,7 +7,6 @@ const { verifyToken } = require('../../config/firebase');
 const getAllUsers = async (req, res) => {
     try {
         const users = await UserModel.find();
-        console.log(users);
         res.json(users);
     } catch (error) {
         console.error('Error fetching users:', error);
@@ -114,7 +113,6 @@ const verifyUser = async (req, res) => {
         return res.status(400).json({message: 'token not found'});
         }
         const decoded = await verifyToken({token});
-        console.log(decoded);
         res.json({email: decoded.email});
     } catch (error) {
         console.error('Error verifying user:', error);

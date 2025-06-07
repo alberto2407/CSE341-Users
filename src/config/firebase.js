@@ -10,9 +10,7 @@ admin.initializeApp({
 
 const verifyToken = async ({token}) => {
   try {
-    console.log("Verifying token:", token);
     const decodedToken = await admin.auth().verifyIdToken(token);
-    console.log("Decoded Token:", decodedToken);
     // Check if the decoded token is valid
     if (!decodedToken) throw new Error("Unauthorized"); 
     return decodedToken;

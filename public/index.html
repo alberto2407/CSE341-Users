@@ -25,15 +25,11 @@
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
 
-        console.log("User:", user);
-
         // If you want to send the token to your backend
         const token = await user.getIdToken();
-        console.log("ID Token:", token);
         fetch('/api/users/verify', { method: 'POST', body: JSON.stringify({ token }), headers: { 'Content-Type': 'application/json' } })
           .then(response => response.json())
           .then(data => {
-            console.log("Backend response:", data);
             alert("Login successful: " + user.displayName);
           })
           .catch(error => {
