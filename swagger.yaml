@@ -15,6 +15,8 @@ servers:
 tags:
   - name: Users
     description: Operations related to users  
+  - name: Tasks
+    description: Operations related to tasks
 paths:
   /users:
     get:
@@ -135,4 +137,119 @@ paths:
                       type: boolean
                     deletedCount: 
                       type: number
-
+  /tasks:
+    get:
+      tags:
+        - Tasks
+      security:
+        - accessTokenHeader: []
+      summary: Get all tasks
+      responses:
+        200:
+          description: A list of tasks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    status:
+                      type: string
+    post:
+      tags:
+        - Tasks
+      security:
+        - accessTokenHeader: []
+      summary: Create a new task
+      description: Creates and returns the newly added task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                status:
+                  type: string
+      responses:
+        200:
+          description: A list of tasks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    status:
+                      type: string
+  /tasks/{id}:
+    patch:
+      tags:
+        - Tasks
+      security:
+        - accessTokenHeader: []
+      summary: Update a task
+      description: Updates a specific task by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the task to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        200:
+          description: A list of tasks
+          content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    acknowledged: 
+                      type: boolean
+    delete:
+      tags:
+        - Tasks
+      security:
+        - accessTokenHeader: []
+      summary: Delete a task
+      description: Deletes a task and returns a result summary
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the task to delete
+          schema:
+            type: string
+      responses:
+        200:
+          description: Task deleted successfully 
+          content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    acknowledged: 
+                      type: boolean
+                    deletedCount: 
+                      type: number

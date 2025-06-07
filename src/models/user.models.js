@@ -7,4 +7,11 @@ const UserShema = new mongoose.Schema({
     password: String
 });
 
+UserShema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.__v;
+    return ret;
+  }
+});
+
 module.exports = mongoose.model('User', UserShema);
